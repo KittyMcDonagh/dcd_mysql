@@ -1,0 +1,6 @@
+*.sql
+.c9
+joinTrackAlbum.txt
+joinTrackAlbum_2.txt
+file.txt
+*.sh*
