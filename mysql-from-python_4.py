@@ -1,4 +1,5 @@
 import os
+import datetime
 
 import pymysql
 
@@ -14,13 +15,14 @@ connection = pymysql.connect(host = 'localhost',
                             
 try:
     # Run a query
-    # Once you have a Connection (see connection above), you can create a Cursor object and call 
-    # its execute() method to perform SQL commands:
+    
     with connection.cursor() as cursor:
-        sql = "SELECT * FROM Artist;"
-        cursor.execute(sql)
-        result = cursor.fetchall()
-        print(result)
+        cursor.execute("""CREATE TABLE IF NOT EXISTS
+                        Friends(name char(20), age int, DOB datetime);""")
+        # Note that the above will display a warning (not an error) if the 
+        # table already exists
+        for row in cursor:
+            print(row)
 finally:
     # Close the connection regardless of whether the above was successful or not
     connection.close()

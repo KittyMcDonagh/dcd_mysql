@@ -11,16 +11,15 @@ connection = pymysql.connect(host = 'localhost',
                             user = username,
                             password = '',
                             db = 'Chinook')
-                            
 try:
     # Run a query
-    # Once you have a Connection (see connection above), you can create a Cursor object and call 
-    # its execute() method to perform SQL commands:
     with connection.cursor() as cursor:
-        sql = "SELECT * FROM Artist;"
-        cursor.execute(sql)
-        result = cursor.fetchall()
-        print(result)
+       list_of_names = ['jim', 'bob', 'fred']
+       # Prepare a list with the same number of placeholders as in list_of_names
+       # e.g. format_strings will = [%s,%s,%s]
+       format_strings = ','.join(['%s']*len(list_of_names))
+       cursor.execute("DELETE FROM Friends WHERE name in ({})".format(format_strings), list_of_names)
+       connection.commit()
 finally:
     # Close the connection regardless of whether the above was successful or not
     connection.close()

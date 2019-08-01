@@ -14,13 +14,11 @@ connection = pymysql.connect(host = 'localhost',
                             
 try:
     # Run a query
-    # Once you have a Connection (see connection above), you can create a Cursor object and call 
-    # its execute() method to perform SQL commands:
+    
     with connection.cursor() as cursor:
-        sql = "SELECT * FROM Artist;"
-        cursor.execute(sql)
-        result = cursor.fetchall()
-        print(result)
+        cursor.execute("UPDATE Friends SET age = %s WHERE name = %s;",
+                       (23, 'Bob'))
+        connection.commit()
 finally:
     # Close the connection regardless of whether the above was successful or not
     connection.close()

@@ -15,12 +15,14 @@ connection = pymysql.connect(host = 'localhost',
 try:
     # Run a query
     # Once you have a Connection (see connection above), you can create a Cursor object and call 
-    # its execute() method to perform SQL commands:
-    with connection.cursor() as cursor:
-        sql = "SELECT * FROM Artist;"
+    # its execute() method to perform SQL commands.
+    # This will display the data in dictionaries which include column names and 
+    # which would be good for converting into json data
+    with connection.cursor(pymysql.cursors.DictCursor) as cursor:
+        sql = "SELECT * FROM Genre;"
         cursor.execute(sql)
-        result = cursor.fetchall()
-        print(result)
+        for row in cursor:
+            print(row)
 finally:
     # Close the connection regardless of whether the above was successful or not
     connection.close()
